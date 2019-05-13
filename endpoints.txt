@@ -1,0 +1,17 @@
+actuator
+autoconfig
+Default
+applied.
+beans
+configprops
+dump
+env
+flyway
+health
+connection
+info
+loggers
+liquibase
+metrics
+mappings
+shutdown
