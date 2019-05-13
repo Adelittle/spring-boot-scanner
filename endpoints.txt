@@ -15,3 +15,8 @@ liquibase
 metrics
 mappings
 shutdown
+trace
+docs
+heapdump
+jolokia
+logfile
