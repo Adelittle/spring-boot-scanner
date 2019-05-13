@@ -14,7 +14,10 @@ parser.add_argument('url', help='full url with path')
 
 args = parser.parse_args()
 
+session =requests.Session()
 
+if args.proxy is not None:
+    session.proxies = {'http': args.proxy, 'https': args.proxy}
 
 
 def test(endpoint):
@@ -25,17 +28,21 @@ def test(endpoint):
         print('[*] file {} already exists, skip (use --force to override)'.format(filename))
         return
     
-    r = requests.get('{}/{}'.format(args.url, endpoint), proxies={'http': args.proxy, 'https': args.proxy})
-    json_response = r.json()
+    r = session.get('{}/{}'.format(args.url, endpoint))
 
     if r.status_code == 200:
         print('[+] get endpoint {}'.format(endpoint))
-        pretty = json.dumps(json_response, indent=4, sort_keys=True)
+        try :
+            json_response = r.json()
+            pretty = json.dumps(json_response, indent=4, sort_keys=True)
 
 
-        with open(filename, 'wt') as output_file:
-            output_file.write(pretty)
-            print('[*] writed in {}'.format(filename))
+            with open(filename, 'wt') as output_file:
+                output_file.write(pretty)
+                print('[*] writed in {}'.format(filename))
+        except Exception as e:
+            print(e)
+            print(r.text)
     else:
         print('[-] bad response for endpoint {} : {}'.format(endpoint, r.status_code))
 
