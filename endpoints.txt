@@ -20,3 +20,4 @@ docs
 heapdump
 jolokia
 logfile
+heapdump
